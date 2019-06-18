@@ -1,0 +1,52 @@
+
+<html> 
+    <head>
+        <script crossorigin src="https://unpkg.com/react@16.7.0/umd/react.production.min.js"></script> 
+        <script crossorigin src="https://unpkg.com/react-dom@16.7.0/umd/react-dom.production.min.js"></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    </head>
+    <body>
+        <div id="root"></div> <!--react를 렌더링할 root가 필요 <div id="root"><button>Like</button></div> 이런결과가 나오겠다는 걸 예측 가능! -->
+        <script type="text/babel">
+            //javascript -> js file
+            //webpack -> 쪼개진 자바스크립트 파일을 html이 실행할 수 있는 javascript 파일로 만들어줌
+            const e = React.createElement;
+
+            class LikeButton extends React.Component {
+                constructor(props) {
+                    super(props);
+
+                    //상태는 바뀔 수 있는 부분
+                    this.state = {
+                        liked : false
+                    };
+                }
+                //상태가 바뀌면 render가 되어짐!
+                render() {
+                     //태그를 만들어주는 부분
+                     //2번째 파라미터가 onclick부분 설정 가능 -> 클릭 했을 때 상태를 liked로 바꿈
+                     //3번째 파라미터는 content부분
+                    // return e(
+                    //     'button', 
+                    //     { onClick : () => {this.setState({liked : !this.state.liked})}, type:'submit'}, 
+                    //     this.state.liked? 'Liked' : 'Like'
+                    // );  
+                    //이런 부분이 가독성이 안좋아서 html tag를 쓸 수 있게 변경함
+                    //<button onclick="() => {console.log('clicked')}">Like</button> -->이런 태그를 만들겠다!
+
+                    return <button type="submit" onClick={() => {this.setState({liked : !this.state.liked})}}>{this.state.liked? 'Liked' : 'Like'}</button>
+                    //자바스크립트에서는 html태그를 직접으로 쓰는 건 문법적으로 맞지 않음
+                    //이걸 지원하는 것이 babel임 ==> JSX (JS + XML)
+                    //babel이 jsx를 위의 e 형태의 return 으로 만들어줌
+                }
+            }    
+        </script> 
+        <script type="text/babel">
+            //위에서 어떻게 만들곘다고 한 부분을 실제로 html에 적용함
+            //ReactDOM.render(e(LikeButton), document.querySelector('#root'));
+            ReactDOM.render(<div><LikeButton /><LikeButton /><LikeButton /><LikeButton /><LikeButton /></div>, document.querySelector('#root'));
+            //이렇게 LikeButton이 component로 함 ! 재사용성이 높아짐!!!!!!!
+\
+        </script>
+    </body>
+</html>

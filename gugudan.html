@@ -1,0 +1,70 @@
+
+<html> 
+        <head>
+            <meta charset="UTF-8"/>
+            <script crossorigin src="https://unpkg.com/react@16.7.0/umd/react.production.min.js"></script> 
+            <script crossorigin src="https://unpkg.com/react-dom@16.7.0/umd/react-dom.production.min.js"></script>
+            <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+        </head>
+        <body>
+            <div id="root"></div>
+            <script type="text/babel">
+                    class GuGuDan extends React.Component {
+                        constructor(props) {
+                            super(props);
+                            this.state = {
+                                first : Math.ceil(Math.random() * 9),
+                                second : Math.ceil(Math.random() * 9),
+                                value : '', //입력창
+                                result : '', //결과 값
+                                answer : '',
+                            };
+                        }
+
+                        onSubmit = (e) => {
+                            e.preventDefault();
+                            if (parseInt(this.state.value) === this.state.first * this.state.second) {
+                                this.setState({
+                                    result : '정답',
+                                    first : Math.ceil(Math.random() * 9),
+                                    second : Math.ceil(Math.random() * 9),
+                                    value : '',
+                                    anwer : this.state.value
+                                });
+                            } else {
+                                this.setState({
+                                    result : '땡',
+                                    value : '',
+                                    anwer : this.state.value
+                                })
+                            }
+                        }
+                        
+                        onChange = (e) => {
+                            this.setState({
+                                value : e.target.value
+                            })
+                        }
+
+                        render() {
+                            return (
+                                // React.Fragment 를 사용하면 됨!
+                                <React.Fragment>
+                                    <div>{this.state.first} 곱하기 {this.state.second}는?</div>
+                                    <form onSubmit={this.onSubmit}> {/* {} 안에는 javascript 코드를 넣을 수 있음 */}
+                                        <input typ="number" value={this.state.value} onChange={this.onChange}/>
+                                        <button>입력!</button>    
+                                    </form>
+                                    <div>{this.state.answer} {this.state.result}</div>
+                                </React.Fragment>
+                            );
+                        }
+                    }
+            </script> 
+            <script type="text/babel">
+                //위에서 어떻게 만들곘다고 한 부분을 실제로 html에 적용함
+                //ReactDOM.render(e(LikeButton), document.querySelector('#root'));
+                ReactDOM.render(<div><GuGuDan /></div>, document.querySelector('#root'));
+            </script>
+        </body>
+    </html>
