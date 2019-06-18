@@ -10,32 +10,36 @@
             <div id="root"></div>
             <script type="text/babel">
                     class GuGuDan extends React.Component {
-                        constructor(props) {
-                            super(props);
-                            this.state = {
-                                first : Math.ceil(Math.random() * 9),
-                                second : Math.ceil(Math.random() * 9),
-                                value : '', //입력창
-                                result : '', //결과 값
-                                answer : '',
-                            };
-                        }
+                        // constructor(props) {
+                        //     super(props);
+                        //     this.state = {
+                        //         first : Math.ceil(Math.random() * 9),
+                        //         second : Math.ceil(Math.random() * 9),
+                        //         value : '', //입력창
+                        //         result : '', //결과 값
+                        //         answer : '',
+                        //     };
+                        // }
+                        state = {
+                            first : Math.ceil(Math.random() * 9),
+                            second : Math.ceil(Math.random() * 9),
+                            value : '', //입력창
+                            result : '', //결과 값
+                         };
 
                         onSubmit = (e) => {
                             e.preventDefault();
                             if (parseInt(this.state.value) === this.state.first * this.state.second) {
                                 this.setState({
-                                    result : '정답',
+                                    result : this.state.first + ' x ' + this.state.second + ' = ' + this.state.value + ' 정답',
                                     first : Math.ceil(Math.random() * 9),
                                     second : Math.ceil(Math.random() * 9),
                                     value : '',
-                                    anwer : this.state.value
                                 });
                             } else {
                                 this.setState({
-                                    result : '땡',
+                                    result : this.state.first + ' x ' + this.state.second + ' = ' + this.state.value + ' 땡',
                                     value : '',
-                                    anwer : this.state.value
                                 })
                             }
                         }
@@ -48,7 +52,8 @@
 
                         render() {
                             return (
-                                // React.Fragment 를 사용하면 됨!
+                                // React.Fragment 를 사용하면 쓸 데 없는 div를 없앨 수 있음.
+                                // babel2를 설치하면 <> 빈태그를 사용할 수 있음
                                 <React.Fragment>
                                     <div>{this.state.first} 곱하기 {this.state.second}는?</div>
                                     <form onSubmit={this.onSubmit}> {/* {} 안에는 javascript 코드를 넣을 수 있음 */}
@@ -64,7 +69,7 @@
             <script type="text/babel">
                 //위에서 어떻게 만들곘다고 한 부분을 실제로 html에 적용함
                 //ReactDOM.render(e(LikeButton), document.querySelector('#root'));
-                ReactDOM.render(<div><GuGuDan /></div>, document.querySelector('#root'));
+                ReactDOM.render(<GuGuDan />, document.querySelector('#root'));
             </script>
         </body>
     </html>
