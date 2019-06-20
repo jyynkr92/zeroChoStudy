@@ -1,0 +1,70 @@
+
+<html> 
+        <head>
+            <meta charset="UTF-8"/>
+            <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+            <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+            <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+        </head>
+        <body>
+            <div id="root"></div>
+            <script type="text/babel">
+                //React Hooks : functional component에 setState와 ref를 쓸 수 있게 한 것!
+                // 짧고 간결해짐! React도 Hooks를 사용하는것을 권장하고 있음
+
+                //functional component 함수형 컴포넌트
+                //setState나 ref를 쓰지 않는 component는 함수형 컴포넌트로 쓸 수 있음.
+                const Gugudan = () => {
+                    // 초기값을 넣어줌
+                    // state를 하나씩 분리하는 것이 좋음, 각 setState 했던 것을 각각의 전용 set으로 분리해줌!
+                    // component안에 꼭 넣어줘야함
+                    // 구조분해문법 이라고도 함!
+                    const [first, setFirst] = React.useState(Math.ceil(Math.random() * 9));
+                    const [second, setSecond] = React.useState(Math.ceil(Math.random() * 9));
+                    const [value, setValue] = React.useState('');
+                    const [result, setResult] = React.useState('');
+                    //ref, 초기값 설정가능
+                    const inputRef = React.useRef(null);
+
+                    const onChangeInput = (e) => {
+                        setValue(e.target.value);
+                    };
+
+                    const onSubmitForm = (e) => {
+                        e.preventDefault();
+                        
+                        if (parseInt(this.state.value) === this.state.first * this.state.second) {
+                            setResult('정답 : ' + value);
+                            setFirst(Math.ceil(Math.random() * 9));
+                            setSecond(Math.ceil(Math.random() * 9));
+                            setValue('');
+                            inputRef.current.focus();
+                        } else {
+                            setResult('땡 : ' + value);
+                            setValue('');
+                            inputRef.current.focus();
+                        }
+                    }
+
+                    //return부분이 class에서 render의 return과 같음
+                    //return <div>{first} {second} {value} {result}</div>;
+                    return (
+                        <React.Fragment>
+                            <div>{first} 곱하기 {second} 는?</div>
+                            <form onSubmit={onSubmitForm}>
+                                <input ref={inputRef} onChange={onChangeInput} value={value}/>
+                                <button>입력</button>
+                            </form>    
+                            <div id="result">{result}</div>
+                        </React.Fragment>
+                    )
+                }
+
+            </script> 
+            <script type="text/babel">
+                //위에서 어떻게 만들곘다고 한 부분을 실제로 html에 적용함
+                //ReactDOM.render(e(LikeButton), document.querySelector('#root'));
+                ReactDOM.render(<Gugudan />, document.querySelector('#root'));
+            </script>
+        </body>
+    </html>
