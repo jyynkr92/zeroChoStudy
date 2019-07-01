@@ -1,0 +1,29 @@
+<!-- 
+    지금은 하나의 html로 하고 있지만 사실 여러개의 컴포넌트가 있을 때, 하나의 js에 넣으면 유지보수가 어려움
+    <script> 로 js 를 넣을 때, 중복이 발생함!
+    webpack -> 여러개로 쪼개진 자바스크립트 파일을 하나로 합쳐줌
+
+    webpack을 하려면 node를 알아야함!
+        node는 자바스크립트 실행기 그 이상 이하 도아님!!!
+    react를 할때 node를 알아야하는 것이 -> webpack을 돌리기 위한 node라는 자바스크립트 실행기를 알아야함
+    webpack설치를 위해
+    # node 깔기
+    1. npm init
+    2. react와 react dom을 설치하려면 : npm i react react-dom
+    3. webpack 설치를 위해서 : npm i -D webpack webpack-cli
+    4. webpack.config.js 만들고 입력 -> module.exports = {};
+    5. client.jsx 만들기 이걸 입력하면 불러올 수 있음
+        ->  const React = require('react');
+            const ReactDOM = require('react-dom');
+ -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>끝말잇기</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <div id = 'root'></div>
+        <script src = "./dist/app.js"></script>
+    </body>
+</html>
