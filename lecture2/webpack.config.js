@@ -21,7 +21,9 @@ module.exports = {
             loader : 'babel-loader', //어떤 룰을 적용시키냐면 babel-loader!
             options : { //babel의 옵션 설정
                 presets : ['@babel/preset-env', '@babel/preset-react'],
-                plugins : ['@babel/plugin-proposal-class-properties'], // state = {} 이런 문법을 쓰려면 얘를 설치해줘야함
+                plugins : ['@babel/plugin-proposal-class-properties',
+                            'react-hot-loader/babel' //수정사항 자동 변경!
+                ], // state = {} 이런 문법을 쓰려면 얘를 설치해줘야함
             }
         }]
     },
