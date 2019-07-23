@@ -62,4 +62,7 @@ module.exports = WordRelay; //파일을 쪼개는 경우에는 이 라인과 맨
  * 
  * webpack-dev-server : webpack.config.js를 읽어서 실행 -> 항상 뒤쪽 서버에 유지를 시켜줌
  *                  npm run을 하면 http://localhost:8080 으로 서버를 줘서 돌릴 수 있도록 함.
+ * 
+ *  console창 => [HMR] : hot moudle reload
+ * [WDS] : webpack dev server
  */
