@@ -2,7 +2,7 @@
 const path = require('path'); //node가 깔려있으면 path가 있음
 
 module.exports = {
-    name : 'wordrelay-setting', //단순이 어떤거 개발하는지에 대한 이름
+    name : 'numberbaseball-setting', //단순이 어떤거 개발하는지에 대한 이름
     mode : 'development', // 실서비스일때는  production을 사용하면됨
     devtool : 'eval',
     //app안에 확장자를 넣을 필요 없음!!
