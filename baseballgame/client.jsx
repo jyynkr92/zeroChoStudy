@@ -1,6 +1,7 @@
 const React = require('react');
 const ReactDom = require('react-dom');
-const NumberBaseball = require('./NumberBaseball'); 
+//const NumberBaseball = require('./NumberBaseball'); 
+import NumberBaseball from './NumberBaseball';
 
 const {hot} = require('react-hot-loader/root'); //{hot} 이런 형식은 구조분해문법
 const Hot = hot(NumberBaseball);
