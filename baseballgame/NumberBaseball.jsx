@@ -2,19 +2,78 @@ import React, {Component} from 'react';
 import Try from './Try';
 
 function getNumbers() { //숫자 네 개를 겹치지 않고 랜덥하게 뽑는 함수
+    const candidate = [1,2,3,4,5,6,7,8,9];
+    const array = [];
 
+    for (let i = 0; i < 4; i++) {
+        const chosen = candidate.splice(Math.floor(Math.random() * (9 - i)), 1)[0];
+        array.push(chosen);
+    }
+
+    return array;
 }
 
 class NumberBaseball extends Component {
     state = {
         result : '',
         value:'',
-        answer: getNumbers(), //
+        answer: getNumbers(), // [1,3,5,7]
         tries : [],
     };
 
-    onChangeInput = () => { //화살표함수 안쓸꺼면 위에 constructor를 써야함
-        
+    onSubmitForm = (e) => {
+        e.preventDefault();
+
+        if (this.state.value === this.state.answer.join('')) {
+            this.setState({
+                result:'홈런',
+                //const array = []; array.push(1); 리액트는 이렇게 push하면 안됨
+                //react는 이러면 뭐가 바뀌었는지 감지를 못하기 때문!
+                //감지할 수 있도록하기 위해
+                // const array2 = [...array,2] --- 기존 배열 복사 + 새로운거 추가
+                //   --- react의 rendering이 바뀌는건! state가 바뀌어야함.
+                // const arr = []; arr.push(1); arr === arr; 이러면 true를 반환해서 같은걸로 인식함
+
+                //옛날꺼 복사해서 새로운거 추가로 넣어주는 형태로 해줘야함!! (새로운 배열로 인식하기 때문)
+                tries : [...this.state.tries, {try:this.state.value, result:'홈런!'}]
+            })
+        } else {
+            const answerArray = this.state.value.split('').map((v) => parseInt(v));
+            let strike = 0;
+            let ball = 0;
+
+            if(this.state.tries.length >= 9) {
+                this.setState({
+                    reuslt : `10번 넘게 돌려서 실패! 답은 ${answer.join(",")}였습니다!`,
+                });
+
+                this.setState({
+                    value : '',
+                    answer : getNumbers(),
+                    tries : [],
+                });
+            } else {
+                for(let i = 0; i < 4; i++) {
+                    if(answerArray[i] === this.state.answer[i]) {
+                        strike += 1;
+                    } else if (this.state.answer.includes(answerArray[i])) {
+                        ball += 1;
+                    }
+                }
+
+                this.setState({
+                    tries : [...this.state.tries, {try : this.state.value, result : `${strike} 스트라이크, ${ball} 볼입니다.`}],
+                    value : '',
+                })
+            }
+        }
+    }
+
+    onChangeInput = (e) => { //화살표함수 안쓸꺼면 위에 constructor를 써야함
+        console.log(this.state.answer);
+        this.setState({
+            value : e.target.value
+        })
     };
 
     /** 화살표 함수 안쓸떄는?
@@ -40,16 +99,6 @@ class NumberBaseball extends Component {
      * }
      */ 
 
-    fruits = [
-        {fruit : '사과', taste : '맛있다'},
-        {fruit : '감', taste : '시다'},
-        {fruit : '귤', taste : '달다'},
-        {fruit : '밤', taste : '떫다'},
-        {fruit : '배', taste : '맛있다'},
-        {fruit : '무', taste : '맛있다'},
-        {fruit : '사과', taste : '맛없따'},
-    ]
-
     render() { //render는 extends Component에서 처리해주기 때문에 화살표 함수로 만들 필요가 없음
         return (
             <>
@@ -67,9 +116,9 @@ class NumberBaseball extends Component {
 
                         다 한 페이지에 적어서 반복문 단위로 먼저 컴포넌트 파일을 분리함 (Top-Down 방식)
                     */}
-                    {this.fruits.map((v, index) => { //v는 배열의 객체, index는 인덱스! key로 index쓰는거는 비추임!(성능최적화가 안됨!)
+                    {this.state.tries.map((v, i) => { //v는 배열의 객체, index는 인덱스! key로 index쓰는거는 비추임!(성능최적화가 안됨!)
                         return(
-                            <Try key={v.fruit + v.taste} value={v} index={index}/> /** html에서는 attribute, react에서는 props */
+                            <Try key={`${i + 1}차 시도 :`} tryInfo={v}/> /** html에서는 attribute, react에서는 props */
                         );
                     })}
                     {/**
