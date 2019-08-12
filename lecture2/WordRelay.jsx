@@ -38,7 +38,7 @@ class WordRelay extends Component {
         this.input = c;
     }
 
-    render() {
+    render() { //render안에는 setState쓰면 안됨!
         return (
             <>
                 <div>{this.state.word}</div>

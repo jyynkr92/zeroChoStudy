@@ -1,5 +1,13 @@
-import React, {useState} from 'react'; //비구조화할당
+import React, {useState, memo, createRef} from 'react'; //비구조화할당
 import Try from './Try';
+
+//shouldComponentUpdate()를 사용하던지! 아니면 
+//import React, {PureComponent} from 'react';
+//로 하고.. class Test extends PureComponent {} 로 해주면됨.
+// PureComponent라는게 shouldComponentUpdate를 자동으로 구현해줌.
+// state가 바뀌었는지 안바뀌었는지 알아서 확인함. but 객체나 배열(참조관계가 있는)의 변경여부는 판단을 어려워함. (현재 array와 뒤에 push한 array는 같은거로 생각함)
+// 그래서 purecomponent나 component를 사용할때든 setState할때 기존배열복사 + 추가 형식으로 해줘야함.
+//shouldComponentUpdate나 memo를 꼭 최적화를 위해서 사용해주는게 좋음
 
 //hooks로 바꿔도 독립적으로 존재함 (class 안에 없기 때문에)
 function getNumbers() { //숫자 네 개를 겹치지 않고 랜덥하게 뽑는 함수
@@ -14,11 +22,12 @@ function getNumbers() { //숫자 네 개를 겹치지 않고 랜덥하게 뽑는
     return array;
 }
 
-const NumberBaseball = () => {
+const NumberBaseball = memo(() => {
     const [result, setResult] = useState('');
     const [value, setValue] = useState('');
     const [answer, setAnswer] = useState(getNumbers());
     const [tries, setTries] = useState([]);
+    //hooks에서 ref사용 import React, {useState, memo, createRef} from 'react';
 
     const onSubmitForm = (e) => {
         e.preventDefault();
@@ -81,7 +90,7 @@ const NumberBaseball = () => {
         </ul>
     </>
     )
-}
+})
 // class NumberBaseball extends Component {
 //     state = {
 //         result : '',
