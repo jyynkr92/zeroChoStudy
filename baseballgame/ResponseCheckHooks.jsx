@@ -49,9 +49,9 @@ const ResponseCheck = () => {
         return result.length === 0
          ? null
          : <>
-            <div>평균 시간 : {result.reduce((a, c) => a + c) / result.length}ms</div>
-            <button onClick={onReset}>리셋</button>
-            </>
+         <div>평균 시간 : {result.reduce((a, c) => a + c) / result.length}ms</div>
+         <button onClick={onReset}>리셋</button>
+         </>
     }
 
     return (
@@ -59,6 +59,20 @@ const ResponseCheck = () => {
             <div id = "screen" className={state} onClick={onClickScreen}>
                 {message}
             </div>
+            {/**
+                {(() => {
+                    if (result.length === 0) {
+                        return null;
+                    } else {
+                        return
+                            <>
+                                <div>평균 시간 : {result.reduce((a, c) => a + c) / result.length}ms</div>
+                                <button onClick={onReset}>리셋</button>
+                            </>
+                    }
+                })}() --- 즉시실행함수
+                //엄청 코드 복잡해지고 더러워짐! -- 차라리 위에 함수로 빼는게 좋음
+            */}
             {renderAverage()}
         </>
     )

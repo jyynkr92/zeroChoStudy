@@ -82,6 +82,15 @@ const NumberBaseball = memo(() => {
             시도 : {tries.length}
         </div>
         <ul>
+            {/**
+                (() => { // 배열에 jsx문법을 담아서 push하는 것도 유효한 문법임 
+                    const array = [];
+                    for (let i = 0; i < tries.length; i++) {
+                        array.push(<Try key={`${i + 1}차 시도 :`} tryInfo={v}/> );
+                    }
+                    return array;
+                })
+            */}
             {tries.map((v, i) => { 
                 return(
                     <Try key={`${i + 1}차 시도 :`} tryInfo={v}/> 
