@@ -32,6 +32,7 @@ class RSP extends Component {
     interval;
 
     //life cycle 
+    //hooks는 componentDidMount() 등 이런거 없어서 따로 처리가 필요함!
     componentDidMount() { // 컴포넌트가 첫 렌더링 된 후, 여기에 비동기 요청을 많이 함! render 처음 실행될 때 동작하는 부분
         //setInterval을 하면 component가 제거되더라도 계속 작동함!!!! -- memory leak가 생김 
         this.interval = setInterval (this.changeHand, 100);
@@ -46,7 +47,9 @@ class RSP extends Component {
         clearInterval(this.interval);
     }
 
-    onClickBtn = (choice) => {
+    onClickBtn = (choice) => () =>  {    
+        /// jsx에서 onClick = {() => func(e)} 이부분을  onClick={func(e)} 해주고 위에서 func = (e) => ()=> {}  이렇게 하면됨
+        /// high order function이라고 함(고차함수)
         const {imgCord} = this.state;
         clearInterval(this.interval);
         const myScore = scores[choice];
@@ -76,7 +79,7 @@ class RSP extends Component {
 
         setTimeout(() => {
             this.interval = setInterval (this.changeHand, 100);
-        }, 2000);
+        }, 1000);
     }
 
     changeHand = () => {
@@ -101,9 +104,9 @@ class RSP extends Component {
             <>
                 <div id="computer" style={{background:`url(https://en.pimg.jp/023/182/267/1/23182267.jpg) ${imgCord} 0`, width:'145px', height:'200px'}} />
                 <div>
-                    <button id="rock" className="btn" onClick={() => this.onClickBtn('바위')}>바위</button>
-                    <button id="scissor" className="btn" onClick={() => this.onClickBtn('가위')}>가위</button>
-                    <button id="paper" className="btn" onClick={() => this.onClickBtn('보')}>보</button>
+                    <button id="rock" className="btn" onClick={this.onClickBtn('바위')}>바위</button>
+                    <button id="scissor" className="btn" onClick={this.onClickBtn('가위')}>가위</button>
+                    <button id="paper" className="btn" onClick={this.onClickBtn('보')}>보</button>
                 </div>
                 <div>{result}</div>
                 <div>햔제 {score}점</div>
