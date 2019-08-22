@@ -3,10 +3,11 @@ const ReactDom = require('react-dom');
 //const NumberBaseball = require('./NumberBaseball'); 
 //import NumberBaseball from './NumberBaseball';
 //import ResponseCheck from './ResponseCheck';
-import RSP from './RSP';
+//import RSP from './RSP';
+import Lotto from './Lotto';
 
 const {hot} = require('react-hot-loader/root'); //{hot} 이런 형식은 구조분해문법
-const Hot = hot(RSP);
+const Hot = hot(Lotto);
 
 //import vs const
 // import React from 'react'; -> babel이 require로 바꿔줌!
