@@ -1,4 +1,4 @@
-import React, {useContext, useCallback} from 'react'
+import React, {useContext, useCallback, memo, useMemo} from 'react'
 import { CODE, OPEN_CELL,CLICK_MINE, FLAG_CELL, QUESTION_CELL, NORMALIZE_CELL, TableContext } from './MineSearch';
 
 const getTdStyle = (code) => {
@@ -44,12 +44,17 @@ const getTdText = (code) => {
         case CODE.QUESTION_MINE:
         case CODE.QUESTION :
             return '?';
-        default :
-            return '';
+        default : {
+            if (code == 0) {
+                return '';
+            } else {
+                return code;
+            }
+        }
     }
 };
 
-const Td = ({rowIndex, cellIndex}) => {
+const Td = memo(({rowIndex, cellIndex}) => {
     const {tableData, dispatch, halted} = useContext(TableContext);
 
     const onClickTd = useCallback(() => {
@@ -97,14 +102,26 @@ const Td = ({rowIndex, cellIndex}) => {
         }
     }, [tableData[rowIndex][cellIndex], halted]);
 
-    return ( 
-        <td style={getTdStyle(tableData[rowIndex][cellIndex])}
+    //함수자체가 여러번 실행되도 return되는 부분은 한번만 실행됨! 
+    // return useMemo(() => ( //contextAPI쓰면 실제로 rerendering이 안되도 깜박일수 있음(react 부하 보면..!)
+    //     <td style={getTdStyle(tableData[rowIndex][cellIndex])}
+    //         onClick={onClickTd}
+    //         onContextMenu={onRightClickTd}
+    //     >
+    //         {getTdText(tableData[rowIndex][cellIndex])}
+    //     </td>
+    //  ));
+    return <RealTd onClickTd={onClickTd} onRightClickTd = {onRightClickTd} data={tableData[rowIndex][cellIndex]}></RealTd>
+});
+
+const RealTd = memo(({onClickTd, onRightClickTd, data}) => {
+    return (
+        <td style={getTdStyle(data)}
             onClick={onClickTd}
             onContextMenu={onRightClickTd}
         >
-            {getTdText(tableData[rowIndex][cellIndex])}
+            {getTdText(data)}
         </td>
-     );
-}
- 
+    )
+})
 export default Td;
